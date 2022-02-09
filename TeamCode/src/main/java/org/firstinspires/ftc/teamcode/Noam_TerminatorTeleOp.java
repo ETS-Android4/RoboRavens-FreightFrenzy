@@ -20,13 +20,13 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
         //Stuff to do
         //TODO: Add More Strafe Speeds
-        //TODO: Rotate Output
 
         //Stuff Done but not tested
         //TODO: Ducking Motor
         //TODO: Bumper Rotate
         //TODO: Octostrafe
         //TODO: Intake Toggles
+        //TODO: Rotate Output
 
         //Stuff Done
 
@@ -34,9 +34,6 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         //y - Lower Intake(toggle)
         //a - bucket drop
         //b - Carousel motor
-        //Unnecessary x - make intake spin out(FailSafe of Linear Slide)
-        //Unnecessary lt - rev drive linear slides Variable
-        //Unnecessary rt - extend drive linear slides Variable
         //rb/lb  - change robot heading
         //left stick L/R/F/B - Strafe
         //trigger left - rotate output out
@@ -47,7 +44,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         double rotate;
         double powR;
         double powL;
-
+        double maxPower = 1;
         //intake
         boolean intakeActive = false;
         //MAGIC NUMBER
@@ -88,7 +85,6 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
              *
              */
             // Intake
-            // TODO: FIX the intake toggle
             if (!intakeToggle && gamepad1.y) {
                 intakeToggle = true;
                 intakeActive = true;
@@ -138,6 +134,17 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             if (gamepad1.x) {
                 robot.intakeMotorPower.set(-intakeDrivePower);
             }
+
+            //TODO: Output
+
+            if(gamepad1.left_trigger > 0.05) {
+                robot.linearSlidesDrive.set(maxPower * gamepad1.left_trigger);
+            }
+
+            if(gamepad1.right_trigger > 0.05) {
+                robot.linearSlidesDrive.set(maxPower * gamepad1.right_trigger);
+            }
+
 
             accel = -gamepad1.left_stick_y;
 
