@@ -45,7 +45,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         double rotate;
         double powR;
         double powL;
-        double maxPower = 1;
+        double maxPower = 0.3;
         //intake
         boolean intakeActive = false;
         //MAGIC NUMBER
