@@ -5,11 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import Team7159.ComplexRobots.Arnold;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Noam - Freight Frenzy Teleop")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Noam - Freight Frenzy TeleOp")
 
 public class Noam_TerminatorTeleOp extends LinearOpMode {
 
     public Arnold robot = new Arnold();
+
     @Override
     public void runOpMode() {
 
@@ -17,24 +18,35 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
         waitForStart();
 
+        //Stuff to do
+        //TODO: Add More Strafe Speeds
+        //TODO: Rotate Output
+
+        //Stuff Done but not tested
+        //TODO: Ducking Motor
+        //TODO: Bumper Rotate
+        //TODO: Octostrafe
+        //TODO: Intake Toggles
+
+        //Stuff Done
+
+
         //y - Lower Intake(toggle)
         //a - bucket drop
         //b - Carousel motor
-        //x - make intake spin out(FailSafe of Linear Slide)
-        //lt - rev drive linear slides Variable
-        //rt - extend drive linear slides Variable
+        //Unnecessary x - make intake spin out(FailSafe of Linear Slide)
+        //Unnecessary lt - rev drive linear slides Variable
+        //Unnecessary rt - extend drive linear slides Variable
         //rb/lb  - change robot heading
         //left stick L/R/F/B - Strafe
+        //trigger left - rotate output out
+        //trigger right - rotate output in
 
         //drive controls
         double accel;
         double rotate;
         double powR;
         double powL;
-
-        //linear slide rotation
-        double linSlideDrivePower = 0.5;
-//        double linSlideRotatePower = 0.3;
 
         //intake
         boolean intakeActive = false;
@@ -43,19 +55,14 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         int intakeTarget = 0;
         double intakeDrivePower = -1;
         double carouselMotorPower = -1;
-        robot.linearSlidesDrive.resetEncoder();
+        //robot.linearSlidesDrive.resetEncoder();
 
-        boolean previousA = false;
-        boolean bucketToggle = false;
         boolean intakeToggle = false;
-        //Carousel Motor
-//        boolean carouselActive = false;
-
 
 
         while (opModeIsActive()) {
             int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
-            int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
+            //int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
 
             telemetry.addData("intakePos: ", robot.intakeMotorRotation.getCurrentPosition());
             telemetry.addData("targetPos: ", intakeTarget);
@@ -106,44 +113,13 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
                 robot.intakeMotorRotation.set(0);
             }
 
-//            // Josh intake
-//            if (gamepad1.y) {
-//                intakeActive = true;
-//            } else {
-//                intakeActive = false;
-//            }
-//            if (intakeActive) {
-//                intakeTarget = intakeLowered;
-//            } else {
-//                //MAGIC NUMBER
-//                intakeTarget = 0;
-//            }
-
             // Carousel(Duck) Motor
             if (gamepad1.b) {
                 robot.carouselMotor.set(carouselMotorPower);
             } else {
                 robot.carouselMotor.set(0);
             }
-//            if (carouselActive) {
-//                robot.carouselMotor.set(carouselMotorPower);
-//            } else {
-//                robot.carouselMotor.set(0);
 
-
-//            if (intakeTarget != intakeLowered && gamepad1.y) {
-//                intakeActive = true;
-//                intakeTarget = intakeLowered;
-//            } else if (intakeTarget != 0 && gamepad1.y) {
-//                intakeActive = false;
-//                intakeTarget = 0;
-            }
-//            intakeActive = false;
-//                }
-//                intakeTarget = intakeLowered;
-//            } else {
-//                //MAGIC NUMBER
-//                intakeTarget = 0;
 
             if (intakeActive) {
                 robot.intakeMotorPower.set(intakeDrivePower);
@@ -163,93 +139,16 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
                 robot.intakeMotorPower.set(-intakeDrivePower);
             }
 
-            //bucket
-//            if (gamepad1.a && !previousA) {
-//                bucketToggle = !bucketToggle;
-//            }
-//            previousA = gamepad1.a;
-//
-//            if (bucketToggle) {
-//                robot.bucketTiltServo.setPosition(0.55);
-//            } else {
-//                robot.bucketTiltServo.setPosition(0);
-//            }
-
-            //linear slides drive
-            //TODO: add encoder value max and min to prevent failure
-            // TODO: get rid of linearSlidesRotate in the whole code
-            //TODO: fix Noam Teleop to work
-
-            //if (gamepad1.left_trigger > 0.5) {
-               // robot.linearSlidesDrive.set(linSlideDrivePower);
-                //if robot encoder value is a certain number stop turning motor to prevent damage
-//                if(LinSlidesDriveCurrentPos = EncoderValue){
-//                    robot.linearSlidesDrive.stopMotor();
-
-
-
-            telemetry.addData("Lin Encdr ", robot.linearSlidesDrive.getCurrentPosition());
-
-            //if robot encoder value is a certain number stop turning motor to prevent damage
-            //TODO: Grab Encoder values for linear slide drive motor
-            /*if(LinSlidesDriveCurrentPos = extend 5780 || LinSlidesDriveCurrentPos = retract EncoderValue)){
-             //                    robot.linearSlidesDrive.stopMotor();
-             }
-             * double linsldpwr = gamepad1.right_trigger;
-             *
-             */
-            // Extend Linear Slide
-            if (gamepad1.right_trigger > 0.1) {
-                robot.linearSlidesDrive.set(-0.15);
-            } else {
-                robot.linearSlidesDrive.set(0);
-            }
-            // Retract Linear Slide b
-            if (gamepad1.left_trigger > 0.1) {
-                robot.linearSlidesDrive.set(.15);
-            } else {
-                robot.linearSlidesDrive.set(0);
-            }
-//
-//            if(robot.linearSlidesDrive.getCurrentPosition()>5779 || robot.linearSlidesDrive.getCurrentPosition()<-309){
-//                robot.linearSlidesDrive.set(0);
-//            }
-
-
-//            //robot.linearSlidesRotate.set(0);
-//            robot.linearSlidesDrive.set(0);
-//            if (gamepad1.left_trigger > 0.5) {
-//                if (gamepad1.y) {
-//                    //robot.linearSlidesRotate.set(0);
-//                    //robot.linearSlidesRotate.set(linSlideRotatePower);
-//                } else if (gamepad1.a) {
-//                    //robot.linearSlidesRotate.set(0);
-//                    //robot.linearSlidesRotate.set(-linSlideRotatePower);
-//                } else {
-//                    //robot.linearSlidesRotate.set(0);
-//                    robot.linearSlidesDrive.set(linSlideDrivePower);
-//                }
-//            } else if (gamepad1.right_trigger > 0.5) {
-//                if (gamepad1.a) {
-//                    //robot.linearSlidesRotate.set(0);
-//                    //robot.linearSlidesRotate.set(linSlideRotatePower);
-////                } else if (gamepad1.a) {
-////                    robot.linearSlidesRotate.set(0);
-////                    robot.linearSlidesRotate.set(-linSlideRotatePower);
-//                } else {
-//                    //robot.linearSlidesRotate.set(0);
-//                    robot.linearSlidesDrive.set(-linSlideDrivePower);
-//                }
-//            }
-            telemetry.addData("Linear Slide Power: ", robot.linearSlidesDrive.getVelocity());
-//        telemetry.addData("LTrigger: ", gamepad1.left_trigger);
-//        telemetry.addData("RTrigger: ", gamepad1.right_trigger);
-
-
             accel = -gamepad1.left_stick_y;
 
             //Right Stick--Rotation
-            rotate = gamepad1.right_stick_x;
+            rotate = gamepad1.left_stick_x;
+
+            if (gamepad1.left_bumper) {
+                rotate += 0.2;
+            } else {
+                rotate -= 0.2;
+            }
 
             //Determines ratio of motor powers (by sides) using the right stick
             double rightRatio = 0.5 - (0.5 * rotate);
@@ -264,6 +163,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
                 maxRatio = 1 / leftRatio;
             }
 
+
             //Uses maxRatio to max out the motor ratio so that one side is always at full power.
             powR = rightRatio * maxRatio;
             powL = leftRatio * maxRatio;
@@ -273,11 +173,29 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             robot.LFMotor.set(powL * accel);
             robot.LBMotor.set(powL * accel);
 
-            robot.pivotTurnLeft(gamepad1.left_bumper);
-            robot.pivotTurnRight(gamepad1.right_bumper);
+            //robot.pivotTurnLeft(gamepad1.left_bumper);
+            //robot.pivotTurnRight(gamepad1.right_bumper);
+
+            boolean forward = false;
+            boolean backward = false;
+            boolean rightward = false;
+            boolean leftward = false;
+
+            if (gamepad1.right_stick_y > 0.5) {
+                forward = true;
+            } else if (gamepad1.right_stick_y < -0.5) {
+                backward = true;
+            }
+
+            if (gamepad1.right_stick_x > 0.5) {
+                rightward = true;
+            } else if (gamepad1.right_stick_x < -0.5) {
+                leftward = true;
+            }
 
             //Strafing controls (thanks Nick)
-            robot.octoStrafe(gamepad1.dpad_up, gamepad1.dpad_down, gamepad1.dpad_left, gamepad1.dpad_right);
+            robot.octoStrafe(forward, backward, leftward, rightward);
             telemetry.update();
         }
     }
+}
