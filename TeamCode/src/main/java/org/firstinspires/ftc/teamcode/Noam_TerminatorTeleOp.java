@@ -154,7 +154,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
             if (gamepad1.left_bumper) {
                 rotate += 0.2;
-            } else {
+            } else if(gamepad1.right_bumper) {
                 rotate -= 0.2;
             }
 
