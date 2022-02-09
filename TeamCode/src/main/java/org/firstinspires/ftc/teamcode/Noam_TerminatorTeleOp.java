@@ -29,15 +29,16 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         //TODO: Rotate Output
 
         //Stuff Done
-
+        //TODO: Everything.
 
         //y - Lower Intake(toggle)
         //a - bucket drop
         //b - Carousel motor
         //rb/lb  - change robot heading
-        //left stick L/R/F/B - Strafe
+        //right stick L/R/F/B - Strafe
         //trigger left - rotate output out
         //trigger right - rotate output in
+        //Drive and Steer - F/B/L/R left stick
 
         //drive controls
         double accel;
@@ -148,7 +149,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
             accel = -gamepad1.left_stick_y;
 
-            //Right Stick--Rotation
+            //Left Stick--Rotation
             rotate = gamepad1.left_stick_x;
 
             if (gamepad1.left_bumper) {
