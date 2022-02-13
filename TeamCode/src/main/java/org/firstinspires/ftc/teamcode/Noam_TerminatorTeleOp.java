@@ -143,7 +143,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             }
 
             if(gamepad1.right_trigger > 0.05) {
-                robot.linearSlidesDrive.set(maxPower * gamepad1.right_trigger);
+                robot.linearSlidesDrive.set(-maxPower * gamepad1.right_trigger);
             }
 
 
