@@ -23,7 +23,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
         //Stuff Done but not tested
         //TODO: Ducking Motor
-        //TODO: Bumper Rotate
+        //TODO: Pivot Turn
         //TODO: Octostrafe
         //TODO: Intake Toggles
         //TODO: Rotate Output
@@ -181,9 +181,6 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             robot.LFMotor.set(powL * accel);
             robot.LBMotor.set(powL * accel);
 
-            //robot.pivotTurnLeft(gamepad1.left_bumper);
-            //robot.pivotTurnRight(gamepad1.right_bumper);
-
             boolean forward = false;
             boolean backward = false;
             boolean rightward = false;
@@ -200,6 +197,9 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             } else if (gamepad1.right_stick_x < -0.5) {
                 leftward = true;
             }
+
+            // pivot turn
+            robot.pivotTurn(1, gamepad1.right_bumper, gamepad1.left_bumper);
 
             //Strafing controls (thanks Nick)
             robot.octoStrafe(forward, backward, leftward, rightward);
