@@ -199,7 +199,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             }
 
             // pivot turn
-            robot.bumperTurn(1, gamepad1.right_bumper, gamepad1.left_bumper);
+            robot.pivotTurn(1, gamepad1.right_bumper, gamepad1.left_bumper);
 
             //Strafing controls (thanks Nick)
             robot.octoStrafe(forward, backward, leftward, rightward);

@@ -92,7 +92,7 @@ public class BasicMecanum {
         }
     }
 
-    public void bumperTurn(double power, boolean rightBumper, boolean leftBumper) {
+    public void pivotTurn(double power, boolean rightBumper, boolean leftBumper) {
         if(rightBumper && leftBumper) {
             RFMotor.set(0);
             LFMotor.set(0);
