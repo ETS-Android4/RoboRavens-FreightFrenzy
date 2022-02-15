@@ -29,7 +29,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         //TODO: Rotate Output
 
         //Stuff Done
-        //TODO: Everything.
+
 
         //y - Lower Intake(toggle)
         //a - bucket drop
@@ -45,20 +45,36 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         double rotate;
         double powR;
         double powL;
-        double maxPower = 0.3;
+        double maxPower = 0.05;
         //intake
         boolean intakeActive = false;
+
+        boolean previousA = false;
+        boolean bucketToggle = false;
         //MAGIC NUMBER
 //        final int intakeLowered = -300;
         int intakeTarget = 0;
         double intakeDrivePower = -1;
-        double carouselMotorPower = -1;
         //robot.linearSlidesDrive.resetEncoder();
 
         boolean intakeToggle = false;
 
 
+
+
         while (opModeIsActive()) {
+            //bucket
+            if (gamepad1.a && !previousA) {
+                bucketToggle = !bucketToggle;
+            }
+            previousA = gamepad1.a;
+
+            if (bucketToggle) {
+                robot.bucketTiltServo.setPosition(0.4);
+            } else {
+                robot.bucketTiltServo.setPosition(0);
+            }
+
             int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
             //int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
 
@@ -80,13 +96,13 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
              * intakeMotorRotation.set(0)
              *if intakeToggle is false and intakeMotorRotation's position is not 0
              * intakeMotorRotation.set(-0.5)
-             *if intakeToggle is true and intakeMotorRotation's position is 0
+             *if intakeToggle is false and intakeMotorRotation's position is 0
              * intakeMotorRotation.set(0)
              *
              *
              */
             // Intake
-            if (!intakeToggle && gamepad1.y) {
+            if (!intakeToggle && gamepad1.y && intakeMotorRotationCurrentPos >= 0) {
                 intakeToggle = true;
                 intakeActive = true;
 
@@ -97,53 +113,34 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             }
 
 
-            if (intakeToggle && intakeMotorRotationCurrentPos != -300) {
+            if (intakeToggle && intakeMotorRotationCurrentPos > -300) {
                 robot.intakeMotorRotation.set(-0.3);
-            }
-            if (intakeMotorRotationCurrentPos >= -300 && intakeToggle) {
+            } else if (intakeMotorRotationCurrentPos <= -300 && intakeToggle) {
                 robot.intakeMotorRotation.set(0);
+                robot.intakeMotorPower.set(-1);
             }
-            if (!intakeToggle && intakeMotorRotationCurrentPos != 0) {
-                robot.intakeMotorRotation.set(-0.5);
-            }
-            if (intakeToggle && intakeMotorRotationCurrentPos <= 0) {
+            if (!intakeToggle && intakeMotorRotationCurrentPos < 0) {
+                robot.intakeMotorRotation.set(0.3);
+            } else if (!intakeToggle && intakeMotorRotationCurrentPos >= 0) {
                 robot.intakeMotorRotation.set(0);
+                robot.intakeMotorPower.set(0);
             }
 
             // Carousel(Duck) Motor
             if (gamepad1.b) {
-                robot.carouselMotor.set(carouselMotorPower);
+                robot.carouselMotor.set(1);
             } else {
                 robot.carouselMotor.set(0);
             }
 
-
-            if (intakeActive) {
-                robot.intakeMotorPower.set(intakeDrivePower);
-            } else {
-                robot.intakeMotorPower.set(0);
-            }
-            if (intakeActive && Math.abs(robot.intakeMotorRotation.getCurrentPosition() - intakeTarget) > 25) {
-                robot.intakeMotorRotation.set(-0.3);
-            }
-            if (!intakeActive && Math.abs(robot.intakeMotorRotation.getCurrentPosition() - intakeTarget) > 25) {
-                robot.intakeMotorRotation.set(0.4);
-            }
-            if (Math.abs(robot.intakeMotorRotation.getCurrentPosition() - intakeTarget) < 25) {
-                robot.intakeMotorRotation.set(0);
-            }
-            if (gamepad1.x) {
-                robot.intakeMotorPower.set(-intakeDrivePower);
-            }
-
             //TODO: Output
 
-            if(gamepad1.left_trigger > 0.05) {
-                robot.linearSlidesDrive.set(maxPower * gamepad1.left_trigger);
+            if(gamepad1.left_trigger > 0.1) {
+                robot.linearSlidesDrive.set(-maxPower);
             }
 
-            if(gamepad1.right_trigger > 0.05) {
-                robot.linearSlidesDrive.set(maxPower * gamepad1.right_trigger);
+            if(gamepad1.right_trigger > 0.1) {
+                robot.linearSlidesDrive.set(maxPower);
             }
 
 
@@ -153,9 +150,16 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             rotate = gamepad1.left_stick_x;
 
             if (gamepad1.left_bumper) {
-                rotate += 0.2;
+                robot.LFMotor.set(1);
+                robot.LBMotor.set(1);
+                robot.RFMotor.set(1);
+                robot.RFMotor.set(1);
             } else if(gamepad1.right_bumper) {
-                rotate -= 0.2;
+                robot.LFMotor.setInverted(true);
+                robot.LFMotor.set(1);
+                robot.LBMotor.set(1);
+                robot.RFMotor.set(1);
+                robot.RFMotor.set(1);
             }
 
             //Determines ratio of motor powers (by sides) using the right stick

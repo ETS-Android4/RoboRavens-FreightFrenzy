@@ -26,7 +26,7 @@ public class BasicMecanum {
         LBMotor.set(0.0);
 
         //TODO: Figure out which motors need to be reversed, etc. so that the robot actually goes forward lmao
-        LFMotor.setInverted(false);
+        LFMotor.setInverted(true);
         RFMotor.setInverted(true);
         LBMotor.setInverted(true);
         RBMotor.setInverted(true);
