@@ -83,7 +83,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             telemetry.addData("intakeVelocity: ", robot.intakeMotorRotation.getVelocity());
             telemetry.addData("arm rotation: ", robot.armRotation.getCurrentPosition());
 
-            //intake
+            //intak
             /**
              * int get posistion
              *if intakeToggle is false and gamepad1.y is pressed:
@@ -136,30 +136,33 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
             //TODO: Output
 
-            if(gamepad1.left_trigger > 0.1) {
-                robot.armRotation.set(-maxPower);
+            if (gamepad1.left_trigger > 0.1) {
+                robot.armRotation.set(gamepad1.left_trigger * -.5);
+                if (robot.armRotation.getCurrentPosition() > 750){
+                    robot.armRotation.set(0);
+                }
             }
 
-            if(gamepad1.right_trigger > 0.1) {
-                robot.armRotation.set(maxPower);
+            if (gamepad1.right_trigger > 0.1) {
+                robot.armRotation.set(gamepad1.right_trigger * .3);
             }
 
 
-            accel = -gamepad1.left_stick_y;
+            accel = gamepad1.left_stick_y;
 
             //Left Stick--Rotation
-            rotate = gamepad1.left_stick_x;
+            rotate = -gamepad1.left_stick_x * 1.5;
 
             if (gamepad1.left_bumper) {
                 robot.LFMotor.set(1);
                 robot.LBMotor.set(1);
                 robot.RFMotor.set(-1);
-                robot.RFMotor.set(-1);
-            } else if(gamepad1.right_bumper) {
+                robot.RBMotor.set(-1);
+            } else if (gamepad1.right_bumper) {
                 robot.LFMotor.set(-1);
                 robot.LBMotor.set(-1);
                 robot.RFMotor.set(1);
-                robot.RFMotor.set(1);
+                robot.RBMotor.set(1);
             }
 
             //Determines ratio of motor powers (by sides) using the right stick
