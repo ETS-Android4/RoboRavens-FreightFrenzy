@@ -153,17 +153,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             //Left Stick--Rotation
             rotate = -gamepad1.left_stick_x * 1.5;
 
-            if (gamepad1.left_bumper) {
-                robot.LFMotor.set(1);
-                robot.LBMotor.set(1);
-                robot.RFMotor.set(-1);
-                robot.RBMotor.set(-1);
-            } else if (gamepad1.right_bumper) {
-                robot.LFMotor.set(-1);
-                robot.LBMotor.set(-1);
-                robot.RFMotor.set(1);
-                robot.RBMotor.set(1);
-            }
+            robot.pivotTurn(1, gamepad1.right_bumper, gamepad1.left_bumper);
 
             //Determines ratio of motor powers (by sides) using the right stick
             double rightRatio = 0.5 - (0.5 * rotate);
