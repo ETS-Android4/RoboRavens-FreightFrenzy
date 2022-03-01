@@ -16,7 +16,7 @@ public class AutoCarouselRed extends LinearOpMode {
 
         waitForStart();
 
-        strafe2(Direction.RIGHT, 1, 0.75);
+        strafe2(Direction.LEFT, 1, 0.75);
         drive(-1, 2);
         carouselSpin(1);
 

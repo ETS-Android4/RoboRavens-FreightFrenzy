@@ -21,7 +21,9 @@ public class AutoShippingHub extends LinearOpMode {
         sleep(1000);
         armRotate(-.65, 1);
         drive(1,.7);
-
+        // go to parking
+        robot.octoStrafe(false, false, true, false);
+        sleep(3000);
     }
 
     private void drive(double pow, double time) {

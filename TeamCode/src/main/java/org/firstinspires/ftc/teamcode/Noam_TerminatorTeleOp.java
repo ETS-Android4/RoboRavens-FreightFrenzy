@@ -58,24 +58,17 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         //robot.linearSlidesDrive.resetEncoder();
 
         boolean intakeToggle = false;
+        double servoPwr = 0;
 
 
 
 
         while (opModeIsActive()) {
             //bucket
-            if (gamepad1.a && !previousA) {
-                bucketToggle = !bucketToggle;
-            }
-            previousA = gamepad1.a;
 
-            if (bucketToggle) {
-                robot.bucketTiltServo.setPosition(0.4);
-            } else {
-                robot.bucketTiltServo.setPosition(0);
-            }
 
-            int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
+
+                int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
             //int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
 
             telemetry.addData("intakePos: ", robot.intakeMotorRotation.getCurrentPosition());
@@ -137,14 +130,14 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             //TODO: Output
 
             if (gamepad1.left_trigger > 0.1) {
-                robot.armRotation.set(gamepad1.left_trigger * -.5);
+                robot.armRotation.set(gamepad1.left_trigger * -.8);
                 if (robot.armRotation.getCurrentPosition() > 750){
                     robot.armRotation.set(0);
                 }
             }
 
             if (gamepad1.right_trigger > 0.1) {
-                robot.armRotation.set(gamepad1.right_trigger * .3);
+                robot.armRotation.set(gamepad1.right_trigger * .6);
             }
 
 
@@ -201,6 +194,8 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             //Strafing controls (thanks Nick)
             robot.octoStrafe(forward, backward, leftward, rightward);
             telemetry.update();
+
+
         }
     }
 }
