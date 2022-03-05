@@ -29,7 +29,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         //TODO: Rotate Output
 
         //Stuff Done
-        //TODO: Everything.
+
 
         //y - Lower Intake(toggle)
         //a - bucket drop
@@ -45,28 +45,42 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         double rotate;
         double powR;
         double powL;
-        double maxPower = 0.3;
+      
+        double maxPower = 0.05;
+
         //intake
         boolean intakeActive = false;
+
+        boolean previousA = false;
+        boolean bucketToggle = false;
+        boolean right = false;
+        boolean left = false;
         //MAGIC NUMBER
 //        final int intakeLowered = -300;
         int intakeTarget = 0;
         double intakeDrivePower = -1;
-        double carouselMotorPower = -1;
         //robot.linearSlidesDrive.resetEncoder();
 
         boolean intakeToggle = false;
+        double servoPwr = 0;
+
+
 
 
         while (opModeIsActive()) {
-            int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
+            //bucket
+
+
+
+                int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
             //int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
 
             telemetry.addData("intakePos: ", robot.intakeMotorRotation.getCurrentPosition());
             telemetry.addData("targetPos: ", intakeTarget);
             telemetry.addData("intakeVelocity: ", robot.intakeMotorRotation.getVelocity());
+            telemetry.addData("arm rotation: ", robot.armRotation.getCurrentPosition());
 
-            //intake
+            //intak
             /**
              * int get posistion
              *if intakeToggle is false and gamepad1.y is pressed:
@@ -80,13 +94,13 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
              * intakeMotorRotation.set(0)
              *if intakeToggle is false and intakeMotorRotation's position is not 0
              * intakeMotorRotation.set(-0.5)
-             *if intakeToggle is true and intakeMotorRotation's position is 0
+             *if intakeToggle is false and intakeMotorRotation's position is 0
              * intakeMotorRotation.set(0)
              *
              *
              */
             // Intake
-            if (!intakeToggle && gamepad1.y) {
+            if (!intakeToggle && gamepad1.y && intakeMotorRotationCurrentPos >= 0) {
                 intakeToggle = true;
                 intakeActive = true;
 
@@ -97,66 +111,71 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             }
 
 
-            if (intakeToggle && intakeMotorRotationCurrentPos != -300) {
+            if (intakeToggle && intakeMotorRotationCurrentPos > -300) {
                 robot.intakeMotorRotation.set(-0.3);
-            }
-            if (intakeMotorRotationCurrentPos >= -300 && intakeToggle) {
+            } else if (intakeMotorRotationCurrentPos <= -300 && intakeToggle) {
                 robot.intakeMotorRotation.set(0);
+                robot.intakeMotorPower.set(-1);
             }
-            if (!intakeToggle && intakeMotorRotationCurrentPos != 0) {
-                robot.intakeMotorRotation.set(-0.5);
-            }
-            if (intakeToggle && intakeMotorRotationCurrentPos <= 0) {
+            if (!intakeToggle && intakeMotorRotationCurrentPos < 0) {
+                robot.intakeMotorRotation.set(0.3);
+            } else if (!intakeToggle && intakeMotorRotationCurrentPos >= 0) {
                 robot.intakeMotorRotation.set(0);
+                robot.intakeMotorPower.set(0);
             }
 
             // Carousel(Duck) Motor
             if (gamepad1.b) {
-                robot.carouselMotor.set(carouselMotorPower);
-            } else {
+                robot.carouselMotor.set(-1);
+            } else if(gamepad1.x){
+                robot.carouselMotor.set(1);
+            }
+            else {
                 robot.carouselMotor.set(0);
-            }
-
-
-            if (intakeActive) {
-                robot.intakeMotorPower.set(intakeDrivePower);
-            } else {
-                robot.intakeMotorPower.set(0);
-            }
-            if (intakeActive && Math.abs(robot.intakeMotorRotation.getCurrentPosition() - intakeTarget) > 25) {
-                robot.intakeMotorRotation.set(-0.3);
-            }
-            if (!intakeActive && Math.abs(robot.intakeMotorRotation.getCurrentPosition() - intakeTarget) > 25) {
-                robot.intakeMotorRotation.set(0.4);
-            }
-            if (Math.abs(robot.intakeMotorRotation.getCurrentPosition() - intakeTarget) < 25) {
-                robot.intakeMotorRotation.set(0);
-            }
-            if (gamepad1.x) {
-                robot.intakeMotorPower.set(-intakeDrivePower);
             }
 
             //TODO: Output
 
-            if(gamepad1.left_trigger > 0.05) {
-                robot.linearSlidesDrive.set(maxPower * gamepad1.left_trigger);
+            if (gamepad1.left_trigger > 0.1) {
+                robot.armRotation.set(gamepad1.left_trigger * -.65);
+                if (robot.armRotation.getCurrentPosition() > 750){
+                    robot.armRotation.set(0);
+                }
             }
 
-            if(gamepad1.right_trigger > 0.05) {
-                robot.linearSlidesDrive.set(maxPower * gamepad1.right_trigger);
+            else if (gamepad1.right_trigger > 0.1) {
+                robot.armRotation.set(gamepad1.right_trigger * .5);
+            }
+
+            else {
+                robot.armRotation.set(0);
             }
 
 
-            accel = -gamepad1.left_stick_y;
+            accel = gamepad1.left_stick_y;
 
             //Left Stick--Rotation
-            rotate = gamepad1.left_stick_x;
+            rotate = -gamepad1.left_stick_x * 1.5;
 
-            if (gamepad1.left_bumper) {
-                rotate += 0.2;
-            } else if(gamepad1.right_bumper) {
-                rotate -= 0.2;
+            if (gamepad1.right_bumper){
+                right = true;
+            } else if (gamepad1.left_bumper){
+                left = true;
             }
+            else{
+                left = false;
+                right = false;
+            }
+
+            robot.pivotTurn(1, right, left);
+
+            // servo
+            if(gamepad1.dpad_up){
+                servoPwr = servoPwr+.01;
+            } else if (gamepad1.dpad_down){
+                servoPwr = servoPwr - .01;
+            }
+            robot.bucketTiltServo.setPosition(servoPwr);
 
             //Determines ratio of motor powers (by sides) using the right stick
             double rightRatio = 0.5 - (0.5 * rotate);
@@ -204,6 +223,8 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             //Strafing controls (thanks Nick)
             robot.octoStrafe(forward, backward, leftward, rightward);
             telemetry.update();
+
+
         }
     }
 }

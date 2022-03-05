@@ -26,7 +26,7 @@ public class BasicMecanum {
         LBMotor.set(0.0);
 
         //TODO: Figure out which motors need to be reversed, etc. so that the robot actually goes forward lmao
-        LFMotor.setInverted(false);
+        LFMotor.setInverted(true);
         RFMotor.setInverted(true);
         LBMotor.setInverted(true);
         RBMotor.setInverted(true);
@@ -90,6 +90,28 @@ public class BasicMecanum {
         }else{
             //Throw an exception
         }
+    }
+
+    public void pivotTurn(double power, boolean rightBumper, boolean leftBumper) {
+        power = power*2;
+        if(rightBumper && leftBumper) {
+            RFMotor.set(0);
+            LFMotor.set(0);
+            RBMotor.set(0);
+            LBMotor.set(0);
+        } else if(leftBumper) {
+            RFMotor.set(-power);
+            LFMotor.set(power);
+            RBMotor.set(-power);
+            LBMotor.set(power);
+        } else if(rightBumper) {
+            RFMotor.set(power);
+            LFMotor.set(-power);
+            RBMotor.set(power);
+            LBMotor.set(-power);
+        }
+
+
     }
 
     public void octoStrafe(boolean up, boolean down, boolean left, boolean right) {
