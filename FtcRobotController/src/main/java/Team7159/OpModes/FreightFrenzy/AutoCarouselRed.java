@@ -16,11 +16,19 @@ public class AutoCarouselRed extends LinearOpMode {
 
         waitForStart();
 
+        // get to carousel
         drive(-1, .3);
-        pivotLeft(-1, .5);
-        drive(1,2);
-        carouselSpin(1, 2);
-
+        robot.octoStrafe(false, false, false, true);
+        sleep(3500);
+        // spin carousel
+        carouselSpin(1,5);
+        // return to start
+        robot.octoStrafe(false, false, true, false);
+        sleep(3500);
+        drive(1, .3);
+        //return to warehouse
+        strafe2(Direction.LEFT, 1, 0.75);
+        drive(1, 3);
     }
 
     private void drive(double pow, double time) {
