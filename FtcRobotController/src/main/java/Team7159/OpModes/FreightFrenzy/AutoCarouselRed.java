@@ -16,9 +16,10 @@ public class AutoCarouselRed extends LinearOpMode {
 
         waitForStart();
 
-        strafe2(Direction.LEFT, 1, 0.75);
-        drive(-1, 2);
-        carouselSpin(1);
+        drive(-1, .3);
+        pivotLeft(-1, .5);
+        drive(1,2);
+        carouselSpin(1, 2);
 
     }
 
@@ -33,11 +34,18 @@ public class AutoCarouselRed extends LinearOpMode {
         stopMotors();
     }
 
-    private void armRotate(double power, double time){
-        robot.armRotation.set(power);
-        sleep((int)(time*1000));
-        robot.armRotation.set(0);
+    private void pivotLeft(double pow, double time) {
+        double t = time*1000;
+        int t1 = (int)t;
+        robot.LFMotor.set(-pow);
+        robot.RFMotor.set(pow);
+        robot.LBMotor.set(pow);
+        robot.RBMotor.set(-pow);
+        sleep(t1);
+        stopMotors();
     }
+
+
 
     private void stopMotors(){
         robot.stop();
@@ -59,7 +67,8 @@ public class AutoCarouselRed extends LinearOpMode {
         stopMotors();
     }
 
-    public void carouselSpin(double power){
+    public void carouselSpin(double power, double time){
         robot.carouselMotor.set(-power);
+        sleep((int)time*1000);
     }
 }

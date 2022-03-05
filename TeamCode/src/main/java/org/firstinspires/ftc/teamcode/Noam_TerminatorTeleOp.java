@@ -51,6 +51,8 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
         boolean previousA = false;
         boolean bucketToggle = false;
+        boolean right = false;
+        boolean left = false;
         //MAGIC NUMBER
 //        final int intakeLowered = -300;
         int intakeTarget = 0;
@@ -122,22 +124,29 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
             // Carousel(Duck) Motor
             if (gamepad1.b) {
+                robot.carouselMotor.set(-1);
+            } else if(gamepad1.x){
                 robot.carouselMotor.set(1);
-            } else {
+            }
+            else {
                 robot.carouselMotor.set(0);
             }
 
             //TODO: Output
 
             if (gamepad1.left_trigger > 0.1) {
-                robot.armRotation.set(gamepad1.left_trigger * -.8);
+                robot.armRotation.set(gamepad1.left_trigger * -.65);
                 if (robot.armRotation.getCurrentPosition() > 750){
                     robot.armRotation.set(0);
                 }
             }
 
-            if (gamepad1.right_trigger > 0.1) {
-                robot.armRotation.set(gamepad1.right_trigger * .6);
+            else if (gamepad1.right_trigger > 0.1) {
+                robot.armRotation.set(gamepad1.right_trigger * .5);
+            }
+
+            else {
+                robot.armRotation.set(0);
             }
 
 
@@ -146,7 +155,25 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             //Left Stick--Rotation
             rotate = -gamepad1.left_stick_x * 1.5;
 
-            robot.pivotTurn(1, gamepad1.right_bumper, gamepad1.left_bumper);
+            if (gamepad1.right_bumper){
+                right = true;
+            } else if (gamepad1.left_bumper){
+                left = true;
+            }
+            else{
+                left = false;
+                right = false;
+            }
+
+            robot.pivotTurn(1, right, left);
+
+            // servo
+            if(gamepad1.dpad_up){
+                servoPwr = servoPwr+.01;
+            } else if (gamepad1.dpad_down){
+                servoPwr = servoPwr - .01;
+            }
+            robot.bucketTiltServo.setPosition(servoPwr);
 
             //Determines ratio of motor powers (by sides) using the right stick
             double rightRatio = 0.5 - (0.5 * rotate);

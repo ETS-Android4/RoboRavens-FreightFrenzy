@@ -23,7 +23,7 @@ public class AutoShippingHub extends LinearOpMode {
         drive(1,.7);
         // go to parking
         robot.octoStrafe(false, false, true, false);
-        sleep(3000);
+        sleep(3500);
     }
 
     private void drive(double pow, double time) {
