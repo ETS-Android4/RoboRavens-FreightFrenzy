@@ -46,6 +46,11 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         double powR;
         double powL;
         double maxPower = 0.05;
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
         //intake
         boolean intakeActive = false;
 
@@ -69,6 +74,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             }
             previousA = gamepad1.a;
 
+<<<<<<< Updated upstream
             if (bucketToggle) {
                 robot.bucketTiltServo.setPosition(0.4);
             } else {
@@ -76,6 +82,9 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             }
 
             int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
+=======
+                int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
+>>>>>>> Stashed changes
             //int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
 
             telemetry.addData("intakePos: ", robot.intakeMotorRotation.getCurrentPosition());
@@ -182,15 +191,15 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             boolean rightward = false;
             boolean leftward = false;
 
-            if (gamepad1.right_stick_y > 0.5) {
+            if (gamepad1.right_stick_y > 0.6) {
                 forward = true;
-            } else if (gamepad1.right_stick_y < -0.5) {
+            } else if (gamepad1.right_stick_y < -0.6) {
                 backward = true;
             }
 
-            if (gamepad1.right_stick_x > 0.5) {
+            if (gamepad1.right_stick_x > 0.6) {
                 rightward = true;
-            } else if (gamepad1.right_stick_x < -0.5) {
+            } else if (gamepad1.right_stick_x < -0.6) {
                 leftward = true;
             }
 
