@@ -48,7 +48,6 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
         double maxPower = 0.05;
 
-
         //intake
         boolean intakeActive = false;
 

@@ -1,3 +1,6 @@
+//Possible new Auto
+//
+//Caurosel, parking, warehouse
 package Team7159.OpModes.FreightFrenzy;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -5,8 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import Team7159.ComplexRobots.Arnold;
 import Team7159.Enums.Direction;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Carousel Auto Blue")
-public class AutoCarouselBlue extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Warehouse Auto Red(Parking)")
+public class AutoRed_Parking extends LinearOpMode {
 
     private Arnold robot = new Arnold();
 
@@ -16,24 +19,8 @@ public class AutoCarouselBlue extends LinearOpMode {
 
         waitForStart();
 
-        // get to carousel
-        drive(-1, .3);
-
-        sleep(500);
-        robot.octoStrafe(false, false, true, false);
-        sleep(3500);
-        drive(1, 2);
-        sleep(500);
-        // spin carousel
-        carouselSpin(-1,5);
-        // return to start
-//        robot.octoStrafe(false, false, false, true);
-//        sleep(3500);
-//        drive(1, .3);
-//        //return to warehouse
-//        strafe2(Direction.RIGHT, 1, 0.75);
-//        drive(1, 3);
-
+        strafe2(Direction.LEFT, 1, 0.75);
+        drive(1, 3);
     }
 
     private void drive(double pow, double time) {
@@ -67,8 +54,6 @@ public class AutoCarouselBlue extends LinearOpMode {
         stopMotors();
     }
 
-    public void carouselSpin(double power, double time){
-        robot.carouselMotor.set(-power);
-        sleep((int)time*1000);
-    }
+
+
 }
