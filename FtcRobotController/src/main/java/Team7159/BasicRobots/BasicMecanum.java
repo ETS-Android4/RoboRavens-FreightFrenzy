@@ -92,6 +92,28 @@ public class BasicMecanum {
         }
     }
 
+    public void pivotTurn(double power, boolean rightBumper, boolean leftBumper) {
+        power = power*2;
+        if(rightBumper && leftBumper) {
+            RFMotor.set(0);
+            LFMotor.set(0);
+            RBMotor.set(0);
+            LBMotor.set(0);
+        } else if(leftBumper) {
+            RFMotor.set(-power);
+            LFMotor.set(power);
+            RBMotor.set(-power);
+            LBMotor.set(power);
+        } else if(rightBumper) {
+            RFMotor.set(power);
+            LFMotor.set(-power);
+            RBMotor.set(power);
+            LBMotor.set(-power);
+        }
+
+
+    }
+
     public void octoStrafe(boolean up, boolean down, boolean left, boolean right) {
         if (up) {
             if (right) {
