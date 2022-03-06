@@ -169,7 +169,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
             robot.pivotTurn(1, right, left);
 
-            // servo
+            // servo - Thanks Josh
             if(gamepad1.dpad_up){
                 servoPwr = servoPwr+.01;
             } else if (gamepad1.dpad_down){
@@ -208,15 +208,15 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             boolean rightward = false;
             boolean leftward = false;
 
-            if (gamepad1.right_stick_y > 0.5) {
+            if (gamepad1.right_stick_y > 0.6) {
                 forward = true;
-            } else if (gamepad1.right_stick_y < -0.5) {
+            } else if (gamepad1.right_stick_y < -0.6) {
                 backward = true;
             }
 
-            if (gamepad1.right_stick_x > 0.5) {
+            if (gamepad1.right_stick_x > 0.6) {
                 rightward = true;
-            } else if (gamepad1.right_stick_x < -0.5) {
+            } else if (gamepad1.right_stick_x < -0.6) {
                 leftward = true;
             }
 
