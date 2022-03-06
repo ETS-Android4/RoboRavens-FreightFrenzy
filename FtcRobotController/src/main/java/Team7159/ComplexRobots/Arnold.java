@@ -34,8 +34,9 @@ public class Arnold extends BasicMecanum {
         carouselMotor.setRunMode(Motor.RunMode.RawPower);
         //carouselMotor.setVeloCoefficients(0.8, 0, 0);
         intakeMotorPower.setRunMode(Motor.RunMode.RawPower);
+
         intakeMotorRotation.setRunMode(MotorEx.RunMode.VelocityControl);
-        intakeMotorRotation.setVeloCoefficients(0.80, 0.50, 0);
+        intakeMotorRotation.setVeloCoefficients(0.80, 0, 0);
 
         armRotation.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         carouselMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
@@ -53,7 +54,7 @@ public class Arnold extends BasicMecanum {
         intakeMotorRotation.set(0);
         intakeMotorRotation.resetEncoder();
 
-        bucketTiltServo.setRange(0, 0.4);
+        bucketTiltServo.setRange(0, 0.7);
         bucketTiltServo.setPosition(0);
 
     }

@@ -5,35 +5,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import Team7159.ComplexRobots.Arnold;
 import Team7159.Enums.Direction;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Carousel Auto Blue")
-public class AutoCarouselBlue extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "NO WAREHOUSE - Shipping Hub Auto")
+public class AutoShippingHub_ANY_NO_WAREHOUSE extends LinearOpMode {
 
-    private Arnold robot = new Arnold();
+    public Arnold robot = new Arnold();
 
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
 
         waitForStart();
-
-        // get to carousel
-        drive(-1, .3);
-
+        drive(-0.5, 1.5);
+        armRotate(.65, 1);
         sleep(500);
-        robot.octoStrafe(false, false, true, false);
-        sleep(3500);
-        drive(1, 2);
-        sleep(500);
-        // spin carousel
-        carouselSpin(-1,5);
-        // return to start
-//        robot.octoStrafe(false, false, false, true);
-//        sleep(3500);
-//        drive(1, .3);
-//        //return to warehouse
-//        strafe2(Direction.RIGHT, 1, 0.75);
-//        drive(1, 3);
-
+        armRotate(-.65, 1);
+        drive(0.5,1.5);
     }
 
     private void drive(double pow, double time) {
@@ -45,6 +31,16 @@ public class AutoCarouselBlue extends LinearOpMode {
         robot.RBMotor.set(pow);
         sleep(t1);
         stopMotors();
+    }
+
+    private void armRotate(double power, double time){
+        robot.armRotation.set(-power);
+        sleep((int)(time*1000));
+        robot.armRotation.set(0);
+
+        if(robot.armRotation.getCurrentPosition() >= 650){
+            robot.armRotation.set(0);
+        }
     }
 
     private void stopMotors(){
@@ -67,8 +63,4 @@ public class AutoCarouselBlue extends LinearOpMode {
         stopMotors();
     }
 
-    public void carouselSpin(double power, double time){
-        robot.carouselMotor.set(-power);
-        sleep((int)time*1000);
-    }
 }

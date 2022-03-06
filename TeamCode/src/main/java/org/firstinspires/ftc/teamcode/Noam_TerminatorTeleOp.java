@@ -45,7 +45,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         double rotate;
         double powR;
         double powL;
-      
+
         double maxPower = 0.05;
 
         //intake
@@ -69,8 +69,6 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             //bucket
-
-
 
                 int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
             //int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
@@ -208,15 +206,15 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             boolean rightward = false;
             boolean leftward = false;
 
-            if (gamepad1.right_stick_y > 0.5) {
+            if (gamepad1.right_stick_y > 0.6) {
                 forward = true;
-            } else if (gamepad1.right_stick_y < -0.5) {
+            } else if (gamepad1.right_stick_y < -0.6) {
                 backward = true;
             }
 
-            if (gamepad1.right_stick_x > 0.5) {
+            if (gamepad1.right_stick_x > 0.6) {
                 rightward = true;
-            } else if (gamepad1.right_stick_x < -0.5) {
+            } else if (gamepad1.right_stick_x < -0.6) {
                 leftward = true;
             }
 
