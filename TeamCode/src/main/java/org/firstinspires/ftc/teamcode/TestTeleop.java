@@ -150,11 +150,10 @@ public class TestTeleop extends LinearOpMode {
                 robot.armRotation.set(0);
             }
 
-            //Control to inverse the driving code
-            if(gamepad1.right_stick_button){
+            //Control to inverse the driving
+            if(gamepad1.left_stick_button && controlInverse == true){
                 controlInverse = false;
-            }
-            if (gamepad1.left_stick_button){
+            } else if (gamepad1.left_stick_button && controlInverse == false){
                 controlInverse= true;
             }
 
@@ -207,7 +206,7 @@ public class TestTeleop extends LinearOpMode {
                 robot.LFMotor.set(powL * accel);
                 robot.LBMotor.set(powL * accel);
             }
-            else{
+            else if(controlInverse = true) {
                 robot.RFMotor.set(-powR * accel);
                 robot.RBMotor.set(-powR * accel);
                 robot.LFMotor.set(-powL * accel);

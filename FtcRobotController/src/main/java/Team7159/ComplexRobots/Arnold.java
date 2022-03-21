@@ -27,7 +27,7 @@ public class Arnold extends BasicMecanum {
         intakeMotorPower = new MotorEx(Map, "intakeMotorPower");
         intakeMotorRotation = new MotorEx(Map, "intakeMotorRotation");
 
-        bucketTiltServo = new SimpleServo(Map, "bucketTiltServo", 0, 180);
+        bucketTiltServo = new SimpleServo(Map, "bucketTiltServo", 360, 0);
 
         armRotation.setRunMode(Motor.RunMode.RawPower);
         //linearSlidesDrive.setVeloCoefficients(0.8, 0, 0);
@@ -53,8 +53,7 @@ public class Arnold extends BasicMecanum {
         intakeMotorRotation.set(0);
         intakeMotorRotation.resetEncoder();
 
-        bucketTiltServo.setRange(0, 0.4);
-        bucketTiltServo.setPosition(0);
+        //bucketTiltServo.setPosition(0);
 
     }
 }
