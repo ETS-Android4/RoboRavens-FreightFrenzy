@@ -39,67 +39,57 @@ public class TerminatorTeleop extends LinearOpMode {
         final int intakeLowered = -300;
         int intakeTarget = 0;
         double intakeDrivePower = -1;
-        boolean intakeToggle = false;
-
 
 //        boolean previousA = false;
 //        boolean bucketToggle = false;
-        double servoPos = 0;
 
         robot.intakeMotorRotation.resetEncoder();
 
         while(opModeIsActive()) {
-            int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
 
             telemetry.addData("intakePos: ", robot.intakeMotorRotation.getCurrentPosition());
             telemetry.addData("targetPos: ", intakeTarget);
             telemetry.addData("intakeVelocity: ", robot.intakeMotorRotation.getVelocity());
 
             //intake
-            // Intake
-            if (!intakeToggle && gamepad1.b && intakeMotorRotationCurrentPos >= 0) {
-                intakeToggle = true;
+            if (gamepad1.b) {
                 intakeActive = true;
-
-            }
-            if (intakeToggle && gamepad1.b && intakeMotorRotationCurrentPos <= -300) {
-                intakeToggle = false;
+            } else {
                 intakeActive = false;
             }
-
-
-            if (intakeToggle && intakeMotorRotationCurrentPos > -300) {
-                robot.intakeMotorRotation.set(-0.3);
-            } else if (intakeMotorRotationCurrentPos <= -300 && intakeToggle) {
-                robot.intakeMotorRotation.set(0);
-                robot.intakeMotorPower.set(-1);
+            if (intakeActive) {
+                intakeTarget = intakeLowered;
+            } else {
+                //MAGIC NUMBER
+                intakeTarget = 0;
             }
-            if (!intakeToggle && intakeMotorRotationCurrentPos < 0) {
-                robot.intakeMotorRotation.set(0.3);
-            } else if (!intakeToggle && intakeMotorRotationCurrentPos >= 60) {
-                robot.intakeMotorRotation.set(0);
+            if (intakeActive) {
+                if (gamepad1.x) {
+                    robot.intakeMotorPower.set(-intakeDrivePower);
+                } else {
+                    robot.intakeMotorPower.set(intakeDrivePower);
+                }
+            } else {
                 robot.intakeMotorPower.set(0);
+            }
+            if (intakeActive && Math.abs(robot.intakeMotorRotation.getCurrentPosition()-intakeTarget) > 25) {
+                robot.intakeMotorRotation.set(-0.3);
+            }
+            if (!intakeActive && Math.abs(robot.intakeMotorRotation.getCurrentPosition()-intakeTarget) > 25) {
+                robot.intakeMotorRotation.set(0.4);
+            }
+            if (Math.abs(robot.intakeMotorRotation.getCurrentPosition()-intakeTarget) < 25) {
+                robot.intakeMotorRotation.set(0);
             }
 
             robot.carouselMotor.set(0);
-            if (gamepad1.left_stick_button) {
+            if (gamepad1.y) {
                 robot.carouselMotor.set(1);
             }
-            if (gamepad1.right_stick_button) {
+            if (gamepad1.x) {
                 robot.carouselMotor.set(-1);
             }
 
-            if (gamepad1.y) {
-                if (servoPos < 1) {
-                    servoPos += 0.1;
-                }
-            }
-            if (gamepad1.x) {
-                if (servoPos > 0) {
-                    servoPos -= 0.1;
-                }
-            }
-            robot.bucketTiltServo.setPosition(servoPos);
             //bucket
 //            if (gamepad1.a && !previousA) {
 //                bucketToggle = !bucketToggle;
@@ -131,7 +121,7 @@ public class TerminatorTeleop extends LinearOpMode {
 //                if (robot.linearSlidesDrive.getCurrentPosition() > 100) {
 //                    robot.linearSlidesDrive.set(linSlideDrivePower);
 //                }
-                robot.armRotation.set(0.5);
+                robot.armRotation.set(0.15);
             } else if (gamepad1.right_trigger > 0.5) {
 //                if (gamepad1.y) {
 //                    robot.linearSlidesRotate.set(0);
@@ -144,7 +134,7 @@ public class TerminatorTeleop extends LinearOpMode {
 //                    robot.linearSlidesDrive.set(-linSlideDrivePower);
 //                }
 //                robot.linearSlidesDrive.set(-linSlideDrivePower);
-                robot.armRotation.set(-0.5);
+                robot.armRotation.set(-0.15);
             }
             telemetry.addData("Linear Slide Power: ", robot.armRotation.getVelocity());
             telemetry.addData("LTrigger: ", gamepad1.left_trigger);
