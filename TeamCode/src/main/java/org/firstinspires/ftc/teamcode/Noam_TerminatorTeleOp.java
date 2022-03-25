@@ -56,7 +56,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
         //robot.linearSlidesDrive.resetEncoder();
 
         boolean intakeToggle = false;
-        double servoPos = robot.bucketTiltServo.getAngle();
+        double servoPos = robot.bucketTiltServo.getPosition();
         boolean inversed = false;
 
         //MAGIC NUMBERS
@@ -65,9 +65,6 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             //Testing Bucket
-
-
-
 
             int intakeMotorRotationCurrentPos = robot.intakeMotorRotation.getCurrentPosition();
             //int LinSlidesDriveCurrentPos = robot.linearSlidesDrive.getCurrentPosition();
@@ -146,12 +143,12 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
             }
 
             // Bucket Servo
-            if(gamepad1.left_stick_button){
-                servoPos = servoPos+.01;
-            } else if (gamepad1.right_stick_button){
-                servoPos = servoPos - .01;
-            }
-            robot.bucketTiltServo.turnToAngle(servoPos);
+//            if(gamepad1.left_stick_button){
+//                servoPos = servoPos+.01;
+//            } else if (gamepad1.right_stick_button){
+//                servoPos = servoPos - .01;
+//            }
+//            robot.bucketTiltServo.turnToAngle(servoPos);
 
             //Driving Code
 
@@ -171,8 +168,6 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
 //                left = false;
 //                right = false;
 //            }
-
-            robot.pivotTurn(1, gamepad1.right_bumper, gamepad1.left_bumper);
 
             //Determines ratio of motor powers (by sides) using the right stick
             double rightRatio = 0.5 - (0.5 * rotate);
@@ -215,6 +210,7 @@ public class Noam_TerminatorTeleOp extends LinearOpMode {
                 leftward = true;
             }
 
+            robot.pivotTurn(1, gamepad1.right_bumper, gamepad1.left_bumper);
             //Strafing controls (thanks Nick)
             robot.octoStrafe(forward, backward, leftward, rightward);
             telemetry.update();
