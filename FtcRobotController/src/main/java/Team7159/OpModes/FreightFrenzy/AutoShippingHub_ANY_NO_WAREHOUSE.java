@@ -15,11 +15,11 @@ public class AutoShippingHub_ANY_NO_WAREHOUSE extends LinearOpMode {
         robot.init(hardwareMap);
 
         waitForStart();
-        drive(-0.5, 1.5);
-        armRotate(.65, 1);
+        drive(-0.7, 1.2);
+        armRotate(.7, .8);
         sleep(500);
         armRotate(-.65, 1);
-        drive(0.5,1.5);
+        drive(0.7,1.2);
     }
 
     private void drive(double pow, double time) {

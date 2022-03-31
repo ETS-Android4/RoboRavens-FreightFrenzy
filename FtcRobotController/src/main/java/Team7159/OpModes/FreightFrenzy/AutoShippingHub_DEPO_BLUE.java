@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import Team7159.ComplexRobots.Arnold;
 import Team7159.Enums.Direction;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "DO NOT USE - Carousel Auto Red")
-public class AutoCarouselRed extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "BLUE DEPO Parking")
+public class AutoShippingHub_DEPO_BLUE extends LinearOpMode {
 
     public Arnold robot = new Arnold();
 
@@ -15,17 +15,17 @@ public class AutoCarouselRed extends LinearOpMode {
         robot.init(hardwareMap);
 
         waitForStart();
-
-        drive(-0.5, 1.5);
-        armRotate(.65, 1);
+        drive(-1, .75);
+        armRotate(.7, .65);
         sleep(500);
-        armRotate(-.65, 1);
-        drive(0.5,1.5);
+        armRotate(-.7, .65);
+        drive(1,.8);
         sleep(300);
-        strafe2(Direction.RIGHT, 1, 1.5);
-        carouselSpin(1, 3);
-        drive(-0.5, 1.5);
-        strafe2(Direction.RIGHT, 1, 0.5);
+        strafe2(Direction.LEFT, 1, 1);
+        sleep(100);
+        drive(-0.5,1.55);
+        sleep(300);
+        strafe2(Direction.LEFT, 1, 1);
     }
 
     private void drive(double pow, double time) {
@@ -39,7 +39,6 @@ public class AutoCarouselRed extends LinearOpMode {
         stopMotors();
     }
 
-
     private void armRotate(double power, double time){
         robot.armRotation.set(-power);
         sleep((int)(time*1000));
@@ -49,7 +48,6 @@ public class AutoCarouselRed extends LinearOpMode {
             robot.armRotation.set(0);
         }
     }
-
 
     private void stopMotors(){
         robot.stop();
@@ -69,11 +67,6 @@ public class AutoCarouselRed extends LinearOpMode {
         }
         sleep((int)t*1000);
         stopMotors();
-    }
-
-    public void carouselSpin(double power, double time){
-        robot.carouselMotor.set(-power);
-        sleep((int)time*1000);
     }
 
 }

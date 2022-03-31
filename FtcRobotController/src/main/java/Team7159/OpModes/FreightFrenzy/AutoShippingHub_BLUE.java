@@ -17,9 +17,9 @@ public class AutoShippingHub_BLUE extends LinearOpMode {
         waitForStart();
 
         drive(-1, .75);
-        armRotate(.65, 1);
+        armRotate(.7, .65);
         sleep(500);
-        armRotate(-.65, 1);
+        armRotate(-.7, .65);
         drive(1,.8);
         // go to parking
         robot.LFMotor.set(-1);

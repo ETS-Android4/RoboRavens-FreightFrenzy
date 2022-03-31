@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import Team7159.ComplexRobots.Arnold;
 import Team7159.Enums.Direction;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Warehouse Auto Red(Parking)")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "PLEASE FOR GOD's SAKE DO NOT USE Warehouse Auto Red(Parking)")
 public class AutoRed_Parking extends LinearOpMode {
 
     private Arnold robot = new Arnold();

@@ -15,11 +15,11 @@ public class AutoShippingHub_DEPO_RED extends LinearOpMode {
         robot.init(hardwareMap);
 
         waitForStart();
-        drive(-0.5, 1.5);
-        armRotate(.65, 1);
+        drive(-1, .75);
+        armRotate(.7, .65);
         sleep(500);
-        armRotate(-.65, 1);
-        drive(0.5,1.5);
+        armRotate(-.7, .65);
+        drive(1,.8);
         sleep(300);
         strafe2(Direction.RIGHT, 1, 1);
         sleep(100);
